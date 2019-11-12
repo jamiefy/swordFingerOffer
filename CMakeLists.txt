@@ -3,4 +3,4 @@ project(swordFingerOffer)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(swordFingerOffer arrayFind.cpp)
+add_executable(swordFingerOffer1arrayFind arrayFind.cpp)
