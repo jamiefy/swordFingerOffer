@@ -16,7 +16,7 @@ bool BiSearchSingle(int target, std::vector<std::vector<int>>& array,int row){
     return false;
 }
 
-//由row->row-1一行一行递归完row以上的全部
+//递归调用,由row->row-1一行一行递归完row以上的全部
 bool BiSearch(int target, std::vector<std::vector<int>>& array,int row){
     if(row==-1)
         return false;
@@ -32,7 +32,7 @@ bool BiSearch(int target, std::vector<std::vector<int>>& array,int row){
     }
     return BiSearch(target,array,row-1);
 }
-//二分查找，提交到牛客网上堆栈溢出（由于递归调用层数太多等）
+//二分查找，提交到牛客网上堆栈溢出（由于递归调用层数太多等）,但是clion里该案例运行正确
 //high=array[0].size()-1（闭区间）时（1）low<=high和high=middle-1 (2）low<high和high=middle-1，且最后加上补丁：nums[low] == target ? low : -1;
 //high=array[0].size()(开区间)时low<high和high=middle
 bool Find(int target, std::vector<std::vector<int>> array) {
