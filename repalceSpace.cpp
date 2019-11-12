@@ -15,7 +15,7 @@ void replaceSpace(char *str,int length) {
         pos+=3;
         length+=3;
     }
-    //没能实现把变换过的string值付给指针
+    //没能实现把变换过的string值赋给指针
     str= const_cast<char *>(s.c_str());
 }
 
