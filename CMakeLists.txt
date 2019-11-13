@@ -5,3 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(swordFingerOffer1arrayFind arrayFind.cpp)
 add_executable(sFO2replaceSpace repalceSpace.cpp)
+add_executable(sFO3printListFromTailToHead printListFromTailToHead.cpp)
