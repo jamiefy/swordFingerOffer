@@ -33,7 +33,7 @@ int pop() {
     return top;
 }
 
-//if条件使用stack2.empty()比！stack2.empty()编码更简便且消耗更少空间
+//if条件使用stack2.empty()比！stack2.empty()编码更简便
 int popImp() {
     int top;
     //先弹出已经进入stack2栈，在确保stack2为空的情况下再由stack1向stack2中输入
