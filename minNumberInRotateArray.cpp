@@ -62,6 +62,68 @@ int minNumberInRotateArraySort(std::vector<int> rotateArray){
     return rotateArray[0];
 }
 
+//
+int minNumberInRotateArrayBinarySort(std::vector<int> rotateArray){
+    if (rotateArray.empty())
+        return 0;
+    unsigned int first = 0, last = rotateArray.size() - 1;
+    unsigned int mid;
+    while (rotateArray[first] >= rotateArray[last]) {
+        //当数组个数减到2个数时进入判断处理
+        if (last - first == 1) {
+            //middle=旋转位
+            mid = last;//2个数时取最后位此时返回mid=last=first+1，最后从这里结束循环
+            break;
+        }
+        //数组1个数或者3个数及以上
+        mid = first + (last - first) / 2;
+        //数组1个数时进入该判断处理,最后从这里结束循环
+        if (rotateArray[first] == rotateArray[mid] && rotateArray[mid] == rotateArray[last])
+            return [&]() -> int {
+                int minVal = rotateArray[first];
+                for (int i = first; i <= last; ++i)
+                    minVal = std::min(minVal, rotateArray[i]);
+                return minVal;
+            }();
+        //数组3个数及以上的时候进入下面两个if判断处理，处理完之后均能继续循环
+        if (rotateArray[first] <= rotateArray[mid])//操作后first=mid满足rotateArray[first] <= rotateArray[mid]，则first位肯定不是数组的最小值，肯定能继续循环
+            first = mid;
+        else if (rotateArray[mid] <= rotateArray[last])//rotateArray[mid]<=rotateArray[last]时区间向左缩，说明旋转位在包括mid的左侧区间，缩小之后肯定能进入循环，如果是1个数则进1个数的if判断处理，如果是2个数则返回
+            //mid=last=first+1，如果是3个数及以上则区间需要左移或者右移，假设现在处于极限条件：旋转位在左缩之后处于最右侧位，则区间需要不断右缩至2个数然后返回last=mid+1,所以最终返回值下标均为first
+            last = mid;//不能使用last=mid-1，若使用可能漏掉最小值
+//        if (rotateArray[first] >= rotateArray[mid])//错误
+//            last=mid;
+//        else if(rotateArray[mid]>=rotateArray[last])//错诶
+//            first=mid;
+    }
+    return rotateArray[mid];//rotateArray[first+1]时可直接把mid=last步骤删去
+}
+
+int minNumberInRotateArrayBinarySortIMP(std::vector<int> rotateArray){
+    if (rotateArray.empty())
+        return 0;
+    unsigned int first = 0, last = rotateArray.size() - 1;
+    unsigned int mid;
+    while (rotateArray[first] >= rotateArray[last]) {//rotateArray[first]>=rotateArray[last]时总能进入while处理，一旦rotateArray[first]<rotateArray[last]则跳出循环说明此时最小位置是first
+        mid = first + (last - first) / 2;
+        //数组1个数时进入该判断处理
+        if (rotateArray[first] == rotateArray[mid] && rotateArray[mid] == rotateArray[last])
+            return [&]() -> int {
+                int minVal = rotateArray[first];
+                for (int i = first; i <= last; ++i)
+                    minVal = std::min(minVal, rotateArray[i]);
+                return minVal;
+            }();
+        //数组2个数及以上的时候进入下面两个if判断处理，处理完之后均能继续循环
+        if (rotateArray[first] <= rotateArray[mid])
+            first = mid+1;//当满足rotateArray[first] <= rotateArray[mid]条件时，mid位置不可能是最小值，肯定能继续循环，所以直接对mid+1进行判断（当数组中包含2个数时mid=first,则first=mid+1=last，区间缩至1个数下一步循环进入1个数的判断处理并结束循环
+        else if (rotateArray[mid] <= rotateArray[last])//rotateArray[mid]<=rotateArray[last]时区间向左缩，说明旋转位在包括mid的左侧区间，缩小之后肯定能进入循环，如果是1个数则进1个数的if判断处理，如果是2个数则返回last=mid+1，如果是3个数及以上
+            //则区间需要左移或者右移，假设现在处于极限条件：旋转位在左缩之后处于最右侧位，则区间需要不断右缩至2个数然后返回last=mid+1,所以最终返回值下标均为first
+            last = mid;//不能使用last=mid-1，若使用可能漏掉最小值
+    }
+    return rotateArray[first];
+}
+
 int main() {
-    std::cout << minNumberInRotateArray(std::vector<int>({2, 3, 4, 5, 1, 1, 1, 1,1,1}));
+    std::cout << minNumberInRotateArrayBinarySort(std::vector<int>({6501,6828,6963,7036,7422,7674,8146,8468,8704,8717,9170,9359,9719,9895,9896,9913,9962,154,293,334,492,1323,1479,1539,1727,1870,1943,2383,2392,2996,3282,3812,3903,4465,4605,4665,4772,4828,5142,5437,5448,5668,5706,5725,6300,6335}));
 }
